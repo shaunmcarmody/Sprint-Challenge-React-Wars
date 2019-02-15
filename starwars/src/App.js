@@ -1,16 +1,17 @@
 import React, { Component } from 'react';
 import Character from './components/Character';
+import Button from './components/Button';
 import './App.css';
 
 class App extends Component {
   constructor() {
     super();
     this.state = {
-      starwarsChars: []
+      starwarsChars: [],
+      next: '',
+      previous: ''
     };
-  }
-
-  
+  }  
 
   componentDidMount() {
     this.getCharacters('https://swapi.co/api/people');
@@ -25,8 +26,12 @@ class App extends Component {
         return res.json();
       })
       .then(data => {
-        /*console.log(data);*/ // <--------- THIS NEEDS REMOVING BEFORE SUBMISSON
-        this.setState({ starwarsChars: data.results });
+        console.log(data); // <--------- THIS NEEDS REMOVING BEFORE SUBMISSON
+        this.setState({
+          starwarsChars: data.results,
+          next: data.next,
+          previous: data.previous
+        });
       })
       .catch(err => {
         throw new Error(err);
@@ -37,6 +42,10 @@ class App extends Component {
     return (
       <div className="App">
         <h1 className="Header">React Wars</h1>
+        <div className="browse">
+          <Button getCharacters={this.getCharacters} browse={this.state.previous}/>
+          <Button getCharacters={this.getCharacters} browse={this.state.next} />
+        </div>
         <div className="container">
           {
             this.state.starwarsChars.map(char => <Character character={char} key={char.name} />)
