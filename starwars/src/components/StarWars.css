@@ -1,7 +1,12 @@
 .character {
     background-color: white;
+    margin-bottom: 50px;
+    min-width: 400px;
+    width: 40%;
 }
 
-li {
+
+ul {
     list-style-type: none;
+    padding: 0;
 }
