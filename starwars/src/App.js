@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import Character from './components/Character';
 import './App.css';
 
 class App extends Component {
@@ -8,6 +9,8 @@ class App extends Component {
       starwarsChars: []
     };
   }
+
+  
 
   componentDidMount() {
     this.getCharacters('https://swapi.co/api/people');
@@ -22,6 +25,7 @@ class App extends Component {
         return res.json();
       })
       .then(data => {
+        /*console.log(data);*/ // <--------- THIS NEEDS REMOVING BEFORE SUBMISSON
         this.setState({ starwarsChars: data.results });
       })
       .catch(err => {
@@ -33,6 +37,11 @@ class App extends Component {
     return (
       <div className="App">
         <h1 className="Header">React Wars</h1>
+        <div className="container">
+          {
+            this.state.starwarsChars.map(char => <Character character={char} key={char.name} />)
+          }
+        </div>
       </div>
     );
   }
